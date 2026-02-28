@@ -10,11 +10,21 @@ pricing
 sales
 we have proposed a website named as "Vithai360" which has the following features:
 1.	Explore farming
+    Features include:
+  	Common tips about farming
 2.	Crop recommendation
+    Features include:
+  	Recommends crops based on the soil type and the weather
 3.	Weather Info
+  	Features include:
+    Shows the temperature and weather status of the given location
 4.  Plant hygiene
+    Features include:
+    Includes tips about plant mainatainance and tracks the hygiene of the plant based on predefined conditions and scores the hygiene based on the user input
 5.	Cost Calculator
-
+    Features include:
+    The user enters the crop type,total land area in acres,cost of seeds,fertilizer & labor..based on this input realtime yield prediction and cost analysis like profit/loss status
+  	
 this is our research project where it is been integrated with hardware 
 the hardware will collect all the info from the farm and it is been stored using a database
 these data will be analysed using the software were do data will be adden which will decrease the carbon emission 
