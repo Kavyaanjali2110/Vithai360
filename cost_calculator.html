@@ -60,8 +60,7 @@
 
 <div class="container">
     <h2>💰 Farming Cost & Income Prediction</h2>
-
-    <!-- CROP DETAILS -->
+    
     <label>🌾 Crop Type</label>
     <select id="crop">
         <option value="">Select Crop</option>
@@ -74,7 +73,6 @@
     <label>📐 Land Area (in acres)</label>
     <input type="number" id="area" placeholder="Eg: 2">
 
-    <!-- COST INPUTS -->
     <label>🌱 Seed Cost (₹)</label>
     <input type="number" id="seedCost" placeholder="Eg: 2000">
 
@@ -99,13 +97,11 @@
 <script>
 function calculateCost() {
 
-    // COST VALUES
     const seed = Number(document.getElementById("seedCost").value) || 0;
     const irrigation = Number(document.getElementById("irrigationCost").value) || 0;
     const fertilizer = Number(document.getElementById("fertilizerCost").value) || 0;
     const labour = Number(document.getElementById("labourCost").value) || 0;
 
-    // CROP DETAILS
     const crop = document.getElementById("crop").value;
     const area = Number(document.getElementById("area").value) || 0;
 
@@ -114,7 +110,7 @@ function calculateCost() {
         return;
     }
 
-    // ASSUMED YIELD (kg/acre) & PRICE (₹/kg)
+    
     let yieldPerAcre = 0;
     let pricePerKg = 0;
 
@@ -135,7 +131,7 @@ function calculateCost() {
         pricePerKg = 3;
     }
 
-    // CALCULATIONS
+  
     const expectedIncome = yieldPerAcre * area * pricePerKg;
     const totalCost = seed + irrigation + fertilizer + labour;
     const profit = expectedIncome - totalCost;
@@ -145,7 +141,7 @@ function calculateCost() {
     else if (profit < 0) status = "❌ Loss Expected";
     else status = "⚠️ Break-even";
 
-    // OUTPUT
+    
     document.getElementById("costResult").innerHTML = `
         <h3>📊 Financial Summary</h3>
         <p><strong>Crop:</strong> ${crop}</p>
@@ -159,4 +155,5 @@ function calculateCost() {
 </script>
 
 </body>
+
 </html>
