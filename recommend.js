@@ -3,12 +3,12 @@ function getRecommendation(event) {
 
     const soil = document.getElementById("soil").value;
     const season = document.getElementById("season").value;
-    // const water = document.getElementById("water").value;
+
 
     let crop = "";
     let reason = "";
 
-    // BLACK SOIL
+
     if (soil === "Black") {
         if (season === "monsoon") {
             crop = "🌾 Cotton / Wheat";
@@ -22,7 +22,7 @@ function getRecommendation(event) {
         }
     }
 
-    // LOAMY SOIL
+    
     else if (soil === "Loamy") {
         if (season === "monsoon") {
             crop = "🌾 Rice";
@@ -36,7 +36,7 @@ function getRecommendation(event) {
         }
     }
 
-    // SANDY SOIL
+    
     else if (soil === "Sandy") {
         if (season === "monsoon") {
             crop = "🥜 Groundnut";
@@ -50,7 +50,7 @@ function getRecommendation(event) {
         }
     }
 
-    // CLAY SOIL
+    
     else if (soil === "Clay") {
         if (season === "monsoon") {
             crop = "🌱 Rice";
@@ -64,10 +64,11 @@ function getRecommendation(event) {
         }
     }
 
-    // OUTPUT
+    
     document.getElementById("result").innerHTML = `
         <h3>🌾 Recommended Crop</h3>
         <p><strong>${crop}</strong></p>
         <p>${reason}</p>
     `;
+
 }
