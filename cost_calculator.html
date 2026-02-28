@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>💰 Cost & Income Prediction | Vithai360</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            width: 650px;
+            margin: 30px auto;
+            background-color: #2e7d32;
+            padding: 25px;
+            border-radius: 10px;
+            color: white;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin: 6px 0 12px 0;
+        }
+
+        button {
+            background-color: #1b5e20;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .result {
+            background-color: #e8f5e9;
+            color: black;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>💰 Farming Cost & Income Prediction</h2>
+
+    <!-- CROP DETAILS -->
+    <label>🌾 Crop Type</label>
+    <select id="crop">
+        <option value="">Select Crop</option>
+        <option value="Rice">Rice</option>
+        <option value="Wheat">Wheat</option>
+        <option value="Millets">Millets</option>
+        <option value="Sugarcane">Sugarcane</option>
+    </select>
+
+    <label>📐 Land Area (in acres)</label>
+    <input type="number" id="area" placeholder="Eg: 2">
+
+    <!-- COST INPUTS -->
+    <label>🌱 Seed Cost (₹)</label>
+    <input type="number" id="seedCost" placeholder="Eg: 2000">
+
+    <label>💧 Irrigation Cost (₹)</label>
+    <input type="number" id="irrigationCost" placeholder="Eg: 1500">
+
+    <label>🧪 Fertilizer / Pesticide Cost (₹)</label>
+    <input type="number" id="fertilizerCost" placeholder="Eg: 1000">
+
+    <label>👷 Labour Cost (₹)</label>
+    <input type="number" id="labourCost" placeholder="Eg: 3000">
+
+    <button onclick="calculateCost()">Calculate</button>
+
+    <div id="costResult" class="result"></div>
+
+    <button onclick="window.location.href='index.html'" style="margin-top:10px;">
+        Back to Home
+    </button>
+</div>
+
+<script>
+function calculateCost() {
+
+    // COST VALUES
+    const seed = Number(document.getElementById("seedCost").value) || 0;
+    const irrigation = Number(document.getElementById("irrigationCost").value) || 0;
+    const fertilizer = Number(document.getElementById("fertilizerCost").value) || 0;
+    const labour = Number(document.getElementById("labourCost").value) || 0;
+
+    // CROP DETAILS
+    const crop = document.getElementById("crop").value;
+    const area = Number(document.getElementById("area").value) || 0;
+
+    if (crop === "" || area <= 0) {
+        alert("Please select crop and enter land area");
+        return;
+    }
+
+    // ASSUMED YIELD (kg/acre) & PRICE (₹/kg)
+    let yieldPerAcre = 0;
+    let pricePerKg = 0;
+
+    if (crop === "Rice") {
+        yieldPerAcre = 2500;
+        pricePerKg = 20;
+    }
+    else if (crop === "Wheat") {
+        yieldPerAcre = 2000;
+        pricePerKg = 22;
+    }
+    else if (crop === "Millets") {
+        yieldPerAcre = 1200;
+        pricePerKg = 30;
+    }
+    else if (crop === "Sugarcane") {
+        yieldPerAcre = 35000;
+        pricePerKg = 3;
+    }
+
+    // CALCULATIONS
+    const expectedIncome = yieldPerAcre * area * pricePerKg;
+    const totalCost = seed + irrigation + fertilizer + labour;
+    const profit = expectedIncome - totalCost;
+
+    let status = "";
+    if (profit > 0) status = "✅ Profit Expected";
+    else if (profit < 0) status = "❌ Loss Expected";
+    else status = "⚠️ Break-even";
+
+    // OUTPUT
+    document.getElementById("costResult").innerHTML = `
+        <h3>📊 Financial Summary</h3>
+        <p><strong>Crop:</strong> ${crop}</p>
+        <p><strong>Land Area:</strong> ${area} acres</p>
+        <p><strong>Expected Income:</strong> ₹${expectedIncome}</p>
+        <p><strong>Total Cost:</strong> ₹${totalCost}</p>
+        <p><strong>Profit / Loss:</strong> ₹${profit}</p>
+        <p><strong>Status:</strong> ${status}</p>
+    `;
+}
+</script>
+
+</body>
+</html>

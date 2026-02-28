@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>🌱Crop Recommendation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+        .container {
+            width: 800px;
+            margin: auto;
+            background-color: #287b17;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        h2 {
+            text-align: center;
+            font-size: medium;
+            color: #f2f2f2;
+        }
+        label {
+            font-weight: bold;
+            font-size: medium;
+            color: #f2f2f2;
+        }
+        input, select, textarea {
+            width: 100%;
+            margin: 8px 0;
+            padding: 8px;
+            color: black;
+        }
+        input[type="radio"], input[type="checkbox"] {
+            width: auto;
+        }
+        .btn {
+            background-color: rgb(17, 123, 17);
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>🌱Crop Recommendation System</h2>
+
+ <form method="POST" action="save_data.php" onsubmit="getRecommendation(event)">
+
+  <label>🌱 Soil Type</label>
+  <select id="soil" name="soil_type" required>
+    <option value="">-- Select Soil Type --</option>
+    <option value="Black">Black</option>
+    <option value="Loamy">Loamy</option>
+    <option value="Sandy">Sandy</option>
+    <option value="Clay">Clay</option>
+  </select>
+
+  <label>🪸 Season</label>
+  <select id="season" name="season" required>
+    <option value="">-- Select Season --</option>
+    <option value="summer">Summer</option>
+    <option value="winter">Winter</option>
+    <option value="monsoon">Monsoon</option>
+  </select>
+  <br></br>
+
+  <!-- <label>💧 Water Availability</label>
+  <select id="water" name="water_level" required>
+    <option value="">-- Select Water Level --</option>
+    <option value="high">High</option>
+    <option value="medium">Medium</option>
+    <option value="low">Low</option>
+  </select> -->
+
+  <button type="submit">🌱 Get Recommendation</button>
+  <br></br>
+
+</form>
+
+  <div id="result" class="result-box"></div>
+
+ <div class="btn-container">
+    <!-- <button class="submit">🌱 Get Recommendation</button> -->
+    <button class="nav-btn" onclick="window.location.href='index.html'">Back to Home</button>
+    <br></br>
+    <button class="nav-btn" onclick="window.location.href='plant_hygiene.html'">Plant Hygiene</button>
+</div>
+</hr>
+
+
+</main>
+
+<script src="recommend.js"></script>
+</body>
+</html>

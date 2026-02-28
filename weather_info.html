@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>🌦 Weather Information | Vithai360</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            width: 600px;
+            margin: 30px auto;
+            background-color: #2e7d32;
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        select {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+        }
+
+        button {
+            background-color: #1b5e20;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .result {
+            background-color: #e8f5e9;
+            color: black;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>🌦 Weather Information</h2>
+
+    <form onsubmit="showWeather(event)">
+        <label>📍 Select City</label>
+        <select id="city" required>
+            <option value="">-- Select City --</option>
+            <option value="Chennai">Chennai</option>
+            <option value="Coimbatore">Coimbatore</option>
+            <option value="Madurai">Madurai</option>
+            <option value="Bengaluru">Bengaluru</option>
+            <option value="Delhi">Delhi</option>
+            <option value="Mumbai">Mumbai</option>
+        </select>
+
+        <button type="submit">Get Weather</button>
+    </form>
+
+    <div id="weatherResult" class="result"></div>
+
+    <button onclick="window.location.href='index.html'" style="margin-top:10px;">
+         Back to Home
+    </button>
+</div>
+
+<script>
+function showWeather(event) {
+    event.preventDefault();
+
+    const city = document.getElementById("city").value;
+
+    let temperature = "";
+    let condition = "";
+
+    // STATIC WEATHER DATA (ASSUMED)
+    if (city === "Chennai") {
+        temperature = "34°C";
+        condition = "Sunny";
+    }
+    else if (city === "Coimbatore") {
+        temperature = "30°C";
+        condition = "Cloudy";
+    }
+    else if (city === "Madurai") {
+        temperature = "35°C";
+        condition = "Hot";
+    }
+    else if (city === "Bengaluru") {
+        temperature = "28°C";
+        condition = "Pleasant";
+    }
+    else if (city === "Delhi") {
+        temperature = "32°C";
+        condition = "Hazy";
+    }
+    else if (city === "Mumbai") {
+        temperature = "31°C";
+        condition = "Humid";
+    }
+
+    document.getElementById("weatherResult").innerHTML = `
+        <h3>🌤 Weather Report</h3>
+        <p><strong>City:</strong> ${city}</p>
+        <p><strong>Temperature:</strong> ${temperature}</p>
+        <p><strong>Condition:</strong> ${condition}</p>
+    `;
+}
+</script>
+
+</body>
+</html>

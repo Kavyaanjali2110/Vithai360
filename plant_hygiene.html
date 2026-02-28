@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>🌿 Plant Hygiene | Vithai360</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            width: 900px;
+            margin: auto;
+            background-color: #2e7d32;
+            padding: 25px;
+            border-radius: 10px;
+            color: white;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background-color: #e8f5e9;
+            color: #000;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            color: #2e7d32;
+        }
+
+        ul {
+            margin-left: 20px;
+        }
+
+        button {
+            background-color: #1b5e20;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #145214;
+        }
+
+        .back-btn {
+            background-color: #0d47a1;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>🌿 Plant Hygiene & Disease Prevention</h2>
+
+    <div class="card">
+        <h3>🧼 What is Plant Hygiene?</h3>
+        <p>
+            Plant hygiene refers to keeping crops, soil, tools, and surroundings clean
+            to prevent pests, diseases, and infections.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>🧹 Field Cleanliness</h3>
+        <ul>
+            <li>Remove infected plants immediately</li>
+            <li>Clear weeds regularly</li>
+            <li>Do not leave crop residue in the field</li>
+            <li>Avoid stagnant water</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>🛠 Tool & Equipment Hygiene</h3>
+        <ul>
+            <li>Clean tools after each use</li>
+            <li>Disinfect tools when moving between fields</li>
+            <li>Do not share infected equipment</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>🌱 Seed & Plant Care</h3>
+        <ul>
+            <li>Use certified disease-free seeds</li>
+            <li>Soak seeds in recommended treatments</li>
+            <li>Maintain proper plant spacing</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>🐛 Pest & Disease Prevention</h3>
+        <ul>
+            <li>Inspect plants weekly</li>
+            <li>Use neem oil or organic sprays</li>
+            <li>Remove affected leaves early</li>
+            <li>Follow crop rotation</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>💡 Simple Hygiene Tips</h3>
+        <ul>
+            <li>Wash hands before handling plants</li>
+            <li>Avoid working in wet fields</li>
+            <li>Do not overuse fertilizers</li>
+            <li>Maintain proper drainage</li>
+        </ul>
+    </div>
+
+    <h3 style="margin-top:20px;">✅ Plant Hygiene Checklist</h3>
+
+<form id="hygieneForm">
+
+  <p>1️. Do you remove infected plants immediately?</p>
+  <input type="radio" name="q1" value="yes"> Yes
+  <input type="radio" name="q1" value="no"> No
+
+  <p>2️Do you clean farming tools regularly?</p>
+  <input type="radio" name="q2" value="yes"> Yes
+  <input type="radio" name="q2" value="no"> No
+
+  <p>3️. Do you use disease-free seeds?</p>
+  <input type="radio" name="q3" value="yes"> Yes
+  <input type="radio" name="q3" value="no"> No
+
+  <p>4️. Do you inspect plants weekly?</p>
+  <input type="radio" name="q4" value="yes"> Yes
+  <input type="radio" name="q4" value="no"> No
+
+  <p>5️. Do you avoid stagnant water in the field?</p>
+  <input type="radio" name="q5" value="yes"> Yes
+  <input type="radio" name="q5" value="no"> No
+
+  <br><br>
+  <button type="button" onclick="checkHygiene()">Check Hygiene Status</button>
+
+</form>
+
+<div id="hygieneResult" style="margin-top:15px;"></div>
+
+    <button onclick="window.location.href='index.html'" class="back-btn">
+        Back to Home
+    </button>
+
+</div>
+
+</body>
+</html>
+<script>
+function checkHygiene() {
+    let score = 0;
+    let total = 5;
+
+    for (let i = 1; i <= total; i++) {
+        const answer = document.querySelector(`input[name="q${i}"]:checked`);
+        if (answer && answer.value === "yes") {
+            score++;
+        }
+    }
+
+    let message = "";
+
+    if (score === 5) {
+        message = "🌟 Excellent hygiene! Your crops are well protected.";
+    } 
+    else if (score >= 3) {
+        message = "⚠️ Moderate hygiene. Improve cleanliness to reduce diseases.";
+    } 
+    else {
+        message = "❌ Poor hygiene. High risk of plant diseases!";
+    }
+
+    document.getElementById("hygieneResult").innerHTML = `
+        <h4>🧪 Hygiene Score: ${score} / ${total}</h4>
+        <p>${message}</p>
+    `;
+}
+</script>
