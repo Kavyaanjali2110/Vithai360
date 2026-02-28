@@ -1,6 +1,9 @@
 Problem:
 Current agricultural workflows are decentralized, farmers rely on separate solutions for soil testing, crop advisory, weather insights, yield prediction, market pricing, and distribution. 
 This lack of system integration leads to inefficiencies, revenue loss, and poor decision-making.
+
+
+
 Solution:
 With the rapid advancement of technology, agriculture no longer needs to function in fragmented silos. 
 Instead of using disconnected tools for:
