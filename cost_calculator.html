@@ -1,159 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>💰 Cost & Income Prediction | Vithai360</title>
+<meta charset="UTF-8">
+<title>💰 Cost & Income Prediction | Vithai360</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-        }
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+}
 
-        .container {
-            width: 650px;
-            margin: 30px auto;
-            background-color: #2e7d32;
-            padding: 25px;
-            border-radius: 10px;
-            color: white;
-        }
+.container {
+    width: 650px;
+    margin: 30px auto;
+    background-color: #2e7d32;
+    padding: 25px;
+    border-radius: 10px;
+    color: white;
+}
 
-        h2 {
-            text-align: center;
-        }
+h2 {
+    text-align: center;
+}
 
-        label {
-            font-weight: bold;
-            margin-top: 10px;
-            display: block;
-        }
+label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+}
 
-        input, select {
-            width: 100%;
-            padding: 8px;
-            margin: 6px 0 12px 0;
-        }
+input {
+    width: 100%;
+    padding: 8px;
+    margin: 6px 0 12px 0;
+}
 
-        button {
-            background-color: #1b5e20;
-            color: white;
-            border: none;
-            padding: 10px;
-            width: 100%;
-            cursor: pointer;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
+button {
+    background-color: #1b5e20;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+}
 
-        .result {
-            background-color: #e8f5e9;
-            color: black;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-        }
-    </style>
+.result {
+    background-color: #e8f5e9;
+    color: black;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+</style>
 </head>
 
 <body>
 
 <div class="container">
-    <h2>💰 Farming Cost & Income Prediction</h2>
-    
-    <label>🌾 Crop Type</label>
-    <select id="crop">
-        <option value="">Select Crop</option>
-        <option value="Rice">Rice</option>
-        <option value="Wheat">Wheat</option>
-        <option value="Millets">Millets</option>
-        <option value="Sugarcane">Sugarcane</option>
-    </select>
+<h2>💰 Farming Cost & Income Prediction</h2>
 
-    <label>📐 Land Area (in acres)</label>
-    <input type="number" id="area" placeholder="Eg: 2">
+<label>🌾 Crop</label>
+<input type="text" id="crop" placeholder="Rice, Tomato">
 
-    <label>🌱 Seed Cost (₹)</label>
-    <input type="number" id="seedCost" placeholder="Eg: 2000">
+<label>📐 Land Area (acres)</label>
+<input type="number" id="area">
 
-    <label>💧 Irrigation Cost (₹)</label>
-    <input type="number" id="irrigationCost" placeholder="Eg: 1500">
+<label>🌱 Seed Cost (₹)</label>
+<input type="number" id="seed">
 
-    <label>🧪 Fertilizer / Pesticide Cost (₹)</label>
-    <input type="number" id="fertilizerCost" placeholder="Eg: 1000">
+<label>💧 Irrigation Cost (₹)</label>
+<input type="number" id="irrigation">
 
-    <label>👷 Labour Cost (₹)</label>
-    <input type="number" id="labourCost" placeholder="Eg: 3000">
+<label>🧪 Fertilizer Cost (₹)</label>
+<input type="number" id="fertilizer">
 
-    <button onclick="calculateCost()">Calculate</button>
+<label>👷 Labour Cost (₹)</label>
+<input type="number" id="labour">
 
-    <div id="costResult" class="result"></div>
+<button onclick="calculate()">Calculate</button>
 
-    <button onclick="window.location.href='index.html'" style="margin-top:10px;">
-        Back to Home
-    </button>
+<div id="result" class="result"></div>
+
+<button onclick="goHome()">⬅ Back to Home</button>
+
 </div>
 
 <script>
-function calculateCost() {
 
-    const seed = Number(document.getElementById("seedCost").value) || 0;
-    const irrigation = Number(document.getElementById("irrigationCost").value) || 0;
-    const fertilizer = Number(document.getElementById("fertilizerCost").value) || 0;
-    const labour = Number(document.getElementById("labourCost").value) || 0;
+function calculate() {
 
-    const crop = document.getElementById("crop").value;
-    const area = Number(document.getElementById("area").value) || 0;
+    const data = {
+        crop: document.getElementById("crop").value,
+        area: Number(document.getElementById("area").value),
+        seed: Number(document.getElementById("seed").value),
+        irrigation: Number(document.getElementById("irrigation").value),
+        fertilizer: Number(document.getElementById("fertilizer").value),
+        labour: Number(document.getElementById("labour").value)
+    };
 
-    if (crop === "" || area <= 0) {
-        alert("Please select crop and enter land area");
-        return;
-    }
+    const resultBox = document.getElementById("result");
+    resultBox.innerHTML = "⏳ Calculating...";
 
-    
-    let yieldPerAcre = 0;
-    let pricePerKg = 0;
+    fetch("http://127.0.0.1:8000/cost-predict", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(d => {
 
-    if (crop === "Rice") {
-        yieldPerAcre = 2500;
-        pricePerKg = 20;
-    }
-    else if (crop === "Wheat") {
-        yieldPerAcre = 2000;
-        pricePerKg = 22;
-    }
-    else if (crop === "Millets") {
-        yieldPerAcre = 1200;
-        pricePerKg = 30;
-    }
-    else if (crop === "Sugarcane") {
-        yieldPerAcre = 35000;
-        pricePerKg = 3;
-    }
+        if (d.error) {
+            resultBox.innerHTML = "❌ " + d.error;
+            return;
+        }
 
-  
-    const expectedIncome = yieldPerAcre * area * pricePerKg;
-    const totalCost = seed + irrigation + fertilizer + labour;
-    const profit = expectedIncome - totalCost;
+        let profitText = "";
+        let status = "";
 
-    let status = "";
-    if (profit > 0) status = "✅ Profit Expected";
-    else if (profit < 0) status = "❌ Loss Expected";
-    else status = "⚠️ Break-even";
+        if (d.profit > 0) {
+            profitText = `🟢 Profit: ₹${d.profit}`;
+            status = "Good choice for farming";
+        } else if (d.profit === 0) {
+            profitText = `🟡 No Profit No Loss`;
+            status = "Break-even";
+        } else {
+            profitText = `🔴 Loss: ₹${Math.abs(d.profit)}`;
+            status = "Risky crop";
+        }
 
-    
-    document.getElementById("costResult").innerHTML = `
+        resultBox.innerHTML = `
         <h3>📊 Financial Summary</h3>
-        <p><strong>Crop:</strong> ${crop}</p>
-        <p><strong>Land Area:</strong> ${area} acres</p>
-        <p><strong>Expected Income:</strong> ₹${expectedIncome}</p>
-        <p><strong>Total Cost:</strong> ₹${totalCost}</p>
-        <p><strong>Profit / Loss:</strong> ₹${profit}</p>
-        <p><strong>Status:</strong> ${status}</p>
-    `;
+
+        <p>🌾 Crop: ${d.crop}</p>
+        <p>📐 Area: ${d.area} acres</p>
+
+        <p>💰 Total Cost: ₹${d.cost}</p>
+        <p>💵 Income: ₹${d.income}</p>
+
+        <p style="font-weight:bold;font-size:18px;">
+        ${profitText}
+        </p>
+
+        <p>${status}</p>
+        `;
+
+    })
+    .catch(() => {
+        resultBox.innerHTML = "❌ Backend not running";
+    });
 }
+
+function goHome(){
+    window.location.href = "index.html";
+}
+
 </script>
 
 </body>
-
 </html>

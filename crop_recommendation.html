@@ -1,101 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>🌱Crop Recommendation</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-        }
-        .container {
-            width: 800px;
-            margin: auto;
-            background-color: #287b17;
-            padding: 20px;
-            border-radius: 10px;
-        }
-        h2 {
-            text-align: center;
-            font-size: medium;
-            color: #f2f2f2;
-        }
-        label {
-            font-weight: bold;
-            font-size: medium;
-            color: #f2f2f2;
-        }
-        input, select, textarea {
-            width: 100%;
-            margin: 8px 0;
-            padding: 8px;
-            color: black;
-        }
-        input[type="radio"], input[type="checkbox"] {
-            width: auto;
-        }
-        .btn {
-            background-color: rgb(17, 123, 17);
-            color: white;
-            border: none;
-            padding: 10px;
-            width: 100%;
-            cursor: pointer;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>🌾 Vithai360 Smart Recommendation</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f4f7f4;
+margin:0;
+}
+
+.container{
+width:450px;
+margin:50px auto;
+background:#2e7d32;
+padding:25px;
+border-radius:10px;
+color:white;
+}
+
+h2{
+text-align:center;
+}
+
+input{
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:5px;
+border:none;
+}
+
+button{
+margin-top:15px;
+width:100%;
+padding:10px;
+background:#1b5e20;
+color:white;
+border:none;
+cursor:pointer;
+border-radius:5px;
+}
+
+button:hover{
+background:#2e7d32;
+}
+
+.best{
+background:#e8f5e9;
+padding:10px;
+border-left:5px solid green;
+font-weight:bold;
+}
+
+.result{
+background:#e8f5e9;
+color:black;
+padding:15px;
+margin-top:15px;
+border-radius:8px;
+}
+
+</style>
 </head>
 
 <body>
 
 <div class="container">
-    <h2>🌱Crop Recommendation System</h2>
 
- <form method="POST" action="save_data.php" onsubmit="getRecommendation(event)">
+<h2>🌱 Vithai360 AI Crop System</h2>
 
-  <label>🌱 Soil Type</label>
-  <select id="soil" name="soil_type" required>
-    <option value="">-- Select Soil Type --</option>
-    <option value="Black">Black</option>
-    <option value="Loamy">Loamy</option>
-    <option value="Sandy">Sandy</option>
-    <option value="Clay">Clay</option>
-  </select>
+<form onsubmit="getRecommendation(event)">
 
-  <label>🪸 Season</label>
-  <select id="season" name="season" required>
-    <option value="">-- Select Season --</option>
-    <option value="summer">Summer</option>
-    <option value="winter">Winter</option>
-    <option value="monsoon">Monsoon</option>
-  </select>
-  <br></br>
+<input type="text" id="soil" placeholder="Enter Soil Type (Loamy, Black...)" required>
 
-  <!-- <label>💧 Water Availability</label>
-  <select id="water" name="water_level" required>
-    <option value="">-- Select Water Level --</option>
-    <option value="high">High</option>
-    <option value="medium">Medium</option>
-    <option value="low">Low</option>
-  </select> -->
+<input type="text" id="location" placeholder="Enter Location (e.g Chennai)" required>
 
-  <button type="submit">🌱 Get Recommendation</button>
-  <br></br>
+<button id="btn" type="submit">Get Recommendation</button>
 
 </form>
 
-  <div id="result" class="result-box"></div>
+<div id="result" class="result"></div>
 
- <div class="btn-container">
+<br><br>
+<button onclick="goHome()">⬅ Back to Home</button>
 
-    <button class="nav-btn" onclick="window.location.href='index.html'">Back to Home</button>
-    <br></br>
-    <button class="nav-btn" onclick="window.location.href='plant_hygiene.html'">Plant Hygiene</button>
 </div>
-</hr>
 
+<script>
 
-</main>
+async function getRecommendation(event){
+event.preventDefault();
 
-<script src="recommend.js"></script>
+const btn = document.getElementById("btn");
+const resultBox = document.getElementById("result");
+
+btn.disabled = true;
+btn.innerText = "Processing...";
+
+const soil = document.getElementById("soil").value.trim();
+const location = document.getElementById("location").value.trim();
+
+resultBox.innerHTML = "⏳ Getting AI recommendation...";
+
+try {
+
+const response = await fetch("http://127.0.0.1:8000/recommend", {
+method: "POST",
+headers: {"Content-Type": "application/json"},
+body: JSON.stringify({
+soil: soil,
+location: location
+})
+});
+
+const data = await response.json();
+console.log(data);
+
+// ❌ backend error
+if(!response.ok || data.error){
+resultBox.innerHTML = "❌ " + (data.error || "Server error");
+return;
+}
+
+// ✅ crop
+const crop = data.crop || "Not found";
+
+// ✅ weather
+const weather = data.weather || {};
+let weatherHTML = "";
+
+if(!weather || weather.error || !weather.temperature){
+weatherHTML = `<p>❌ Weather not available</p>`;
+}else{
+weatherHTML = `
+<h3>🌦 Weather</h3>
+<p>🌡 Temperature: ${weather.temperature} °C</p>
+<p>💧 Humidity: ${weather.humidity}%</p>
+<p>🌤 Condition: ${weather.condition}</p>
+`;
+}
+
+// ✅ NEW FEATURES (safe fallback)
+const irrigation = data.irrigation || "Not available";
+const fertilizer = data.fertilizer || "Not available";
+const pesticide = data.pesticide || "Not available";
+const duration = data.duration || "Not available";
+
+// ✅ FINAL UI
+resultBox.innerHTML = `
+<h3>📍 Location: ${location}</h3>
+<p>🌱 Soil: ${soil}</p>
+
+<h3 style="color:green">🌾 Best Recommended Crop</h3>
+<div class="best">🥇 ${crop}</div>
+
+${weatherHTML}
+
+<h3>💧 Irrigation Advice</h3>
+<p>${irrigation}</p>
+
+<h3>🌿 Fertilizer Recommendation</h3>
+<p>${fertilizer}</p>
+
+<h3>🐛 Pesticide Advice</h3>
+<p>${pesticide}</p>
+
+<h3>⏳ Cultivation Duration</h3>
+<p>${duration}</p>
+`;
+
+} catch(err){
+console.log(err);
+resultBox.innerHTML = `
+<h3>📍 Location: ${location}</h3>
+<p>🌱 Soil: ${soil}</p>
+
+<h3 style="color:green">🌾 Best Recommended Crop</h3>
+<div class="best">🥇 ${crop}</div>
+
+<h3>🌿 Farming Guide</h3>
+<p>💧 Irrigation: ${irrigation}</p>
+<p>🌱 Fertilizer: ${fertilizer}</p>
+<p>🐛 Pesticide: ${pesticide}</p>
+<p>⏳ Duration: ${duration}</p>
+
+${weatherHTML}
+`;
+}
+
+// reset button
+btn.disabled = false;
+btn.innerText = "Get Recommendation";
+}
+
+function goHome(){
+window.location.href = "index.html";
+}
+
+</script>
+
 </body>
-
 </html>

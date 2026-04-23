@@ -1,50 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Vithai360</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>🌾 Vithai360 - Smart Agriculture Platform</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#f4f7f4;
+}
+
+/* HEADER */
+.header{
+background:linear-gradient(135deg,#1b5e20,#43a047);
+color:white;
+padding:25px;
+text-align:center;
+}
+
+.brand{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:15px;
+}
+
+.logo{
+width:60px;
+height:60px;
+border-radius:50%;
+}
+
+.vi{
+font-size:32px;
+margin:0;
+}
+
+.tagline{
+margin-top:5px;
+font-size:14px;
+opacity:0.9;
+}
+
+/* FEATURES */
+.features{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+padding:30px;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+transition:0.3s;
+border-left:5px solid #2e7d32;
+}
+
+.card:hover{
+transform:translateY(-5px);
+box-shadow:0 8px 20px rgba(0,0,0,0.15);
+}
+
+.card h2{
+margin:0;
+font-size:20px;
+}
+
+.card a{
+text-decoration:none;
+color:#1b5e20;
+font-weight:bold;
+}
+
+.card p{
+color:#555;
+font-size:14px;
+margin-top:8px;
+}
+
+/* FOOTER */
+footer{
+text-align:center;
+padding:15px;
+background:#1b5e20;
+color:white;
+margin-top:20px;
+}
+
+</style>
+
 </head>
+
 <body>
 
 <header class="header">
-  <div class="brand">
-    <img src="logo.jpeg" alt="Vithai360 Logo" class="logo">
-    <h1 class="vi">Vithai360</h1>
-  </div>
-  <p class="tagline">Learn, Plan, Grow, Profit</p>
+
+<div class="brand">
+<img src="logo.jpeg" alt="Vithai360 Logo" class="logo">
+<h1 class="vi">Vithai360</h1>
+</div>
+
+<p class="tagline">🌱 Learn • Plan • Grow • Profit</p>
+
 </header>
 
 <section class="features">
-    <div class="card">
-    <h2><a href="learn.html">Explore farming</a></h2>
-    <p>Beginner-friendly crop guides and farming basics.</p>
-  </div>
 
-  <div class="card">
-        <h2><a href="crop_recommendation.html">Crop Recommendation</a></h2>
-    <p>Find the best crop based on soil and season.</p>
-  </div>
+<div class="card">
+<h2><a href="learn.html">📘 Explore Farming</a></h2>
+<p>Beginner-friendly crop guides and farming basics.</p>
+</div>
 
-  <div class="card">
-    <h2><a href="weather_info.html">Weather Info</a></h2>
-    <p>Know the best time to sow and harvest.</p>
-  </div>
+<div class="card">
+<h2><a href="crop_recommendation.html">🌱 Crop Recommendation</a></h2>
+<p>AI-based crop suggestion using soil & season.</p>
+</div>
 
-  <div class="card">
-        <h2><a href="plant_hygiene.html">Plant Hygiene</a></h2>
-    <p>Know more about weeds and pests</p>
-  </div>
+<div class="card">
+<h2><a href="plant_hygiene.html">🌿 Plant Hygiene</a></h2>
+<p>Learn pest control and crop protection methods.</p>
+</div>
 
+<div class="card">
+<h2><a href="cost_calculator.html">💰 Cost Calculator</a></h2>
+<p>Estimate farming investment and profit.</p>
+</div>
+
+<div class="card">
+<h2><a href="market.html">📊 Market Prices</a></h2>
+<p>Check live agricultural market prices.</p>
+</div>
   
-  <div class="card">
-    <h2><a href="cost_calculator.html">Cost Calculator</a></h2>
-    <p>Estimate investment and profit easily.</p>
-  </div>
 </section>
 
 <footer>
-  <p>© 2026 Vithai360 | Own your own products</p>
+<p>© 2026 Vithai360 | Smart Farming for a Better Future 🌾</p>
 </footer>
 
 </body>

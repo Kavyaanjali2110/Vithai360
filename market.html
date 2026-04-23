@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>📊 Market Information | Vithai360</title>
+
+<style>
+body{
+font-family: Arial, sans-serif;
+background:#f2f2f2;
+}
+
+.container{
+width:650px;
+margin:40px auto;
+background:#2e7d32;
+padding:25px;
+border-radius:10px;
+color:white;
+box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+h2{
+text-align:center;
+margin-bottom:20px;
+}
+
+label{
+font-weight:bold;
+display:block;
+margin-top:10px;
+}
+
+input{
+width:100%;
+padding:10px;
+margin-top:8px;
+border:none;
+border-radius:5px;
+font-size:14px;
+}
+
+button{
+background:#1b5e20;
+color:white;
+border:none;
+padding:12px;
+width:100%;
+margin-top:15px;
+border-radius:6px;
+cursor:pointer;
+font-size:15px;
+}
+
+button:hover{
+background:#145a1a;
+}
+
+.result{
+background:#e8f5e9;
+color:black;
+padding:18px;
+border-radius:8px;
+margin-top:20px;
+line-height:1.7;
+}
+
+.result h3{
+margin-top:0;
+}
+
+.back-btn{
+background:#1b5e20;
+margin-top:10px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>📊 Market Information</h2>
+
+<label>🌾 Enter Crop Name</label>
+<input type="text" id="crop" placeholder="Example: Rice, Wheat, Cotton">
+
+<button onclick="getMarketPrice()">Get Market Price</button>
+
+<div id="result" class="result">
+Enter a crop name to view the latest market price.
+</div>
+
+<button class="back-btn" onclick="window.location.href='index.html'">
+Back to Home
+</button>
+
+</div>
+
+<script>
+
+async function getMarketPrice(){
+
+const crop = document.getElementById("crop").value.trim();
+
+if(crop === ""){
+alert("Please enter a crop name");
+return;
+}
+
+try{
+
+// ✅ FIXED ENDPOINT (matches FastAPI)
+const response = await fetch(`http://127.0.0.1:8000/market/${crop}`);
+
+const data = await response.json();
+
+console.log("API Response:", data);
+
+// Handle backend errors
+if(data.error){
+document.getElementById("result").innerHTML =
+`⚠ ${data.error}`;
+return;
+}
+
+// Safe fallback values
+const cropName = data.crop || "N/A";
+const price = data.price || data.average_market_price_per_quintal || "N/A";
+const market = data.market || "Agmarknet API";
+const source = data.source || "Live API";
+
+document.getElementById("result").innerHTML = `
+<h3>📊 Market Details</h3>
+
+<p><strong>Crop:</strong> ${cropName}</p>
+<p><strong>Market:</strong> ${market}</p>
+<p><strong>Price:</strong> ${price}</p>
+<p><strong>Source:</strong> ${source}</p>
+`;
+
+}
+catch(error){
+
+console.error(error);
+
+document.getElementById("result").innerHTML =
+"⚠ Unable to fetch market data. Please try again.";
+
+}
+}
+
+</script>
+
+</body>
+</html>
